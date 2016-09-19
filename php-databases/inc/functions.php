@@ -1,4 +1,20 @@
 <?php
+
+function full_catalog_array() {
+    include("connection.php");
+
+    try {
+        $results = $db->query("SELECT title, category, img FROM media");
+    }
+    catch (Exception $e) {
+        echo "Not retrieved";
+        exit;
+    }
+
+    $catalog = $results->fetchAll(PDO::FETCH_ASSOC);
+    return $catalog;
+}
+
 function get_item_html($id,$item) {
     $output = "<li><a href='details.php?id="
         . $id . "'><img src='" 

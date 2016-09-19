@@ -6,10 +6,8 @@ try {
 }
 catch (Exception $e) {
 	echo "Unable to connect";
-	echo $e->getMessage();
+	//echo $e->getMessage();
 	exit;
 }
-
-echo "Connected successfuly";
 
 ?>

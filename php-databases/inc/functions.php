@@ -4,7 +4,7 @@ function full_catalog_array() {
     include("connection.php");
 
     try {
-        $results = $db->query("SELECT title, category, img FROM media");
+        $results = $db->query("SELECT media_id, title, category, img FROM media");
     }
     catch (Exception $e) {
         echo "Not retrieved";
@@ -14,10 +14,53 @@ function full_catalog_array() {
     $catalog = $results->fetchAll(PDO::FETCH_ASSOC);
     return $catalog;
 }
+function single_item_array($id) {
+    include("connection.php");
+
+    try {
+        $results = $db->prepare(
+            "SELECT media.media_id, title, category, img, format, year, publisher, genre, isbn
+            FROM media
+            JOIN genres ON media.genre_id = genres.genre_id
+            LEFT OUTER JOIN books ON media.media_id = books.media_id
+            WHERE media.media_id = ?"
+            );
+        $results->bindParam(1, $id, PDO::PARAM_INT);
+        $results->execute();
+    }
+    catch (Exception $e) {
+        echo "Not retrieved1";
+        exit;
+    }
+
+    $item = $results->fetch();
+    if (empty($item)) return $item;
+
+    try {
+        $results = $db->prepare(
+            "SELECT fullname, role
+            FROM media_people
+            JOIN people ON media_people.people_id = people.people_id
+            WHERE media_people.media_id = ?"
+            );
+        $results->bindParam(1, $id, PDO::PARAM_INT);
+        $results->execute();
+    }
+    catch (Exception $e) {
+        echo "Not retrieved2";
+        exit;
+    }
+
+    while ($row = $results->fetch(PDO::FETCH_ASSOC)) {
+        $item[$row["role"]][] = $row["fullname"];
+    }
+
+    return $item;
+}
 
 function get_item_html($id,$item) {
     $output = "<li><a href='details.php?id="
-        . $id . "'><img src='" 
+        . $item["media_id"] . "'><img src='" 
         . $item["img"] . "' alt='" 
         . $item["title"] . "' />" 
         . "<p>View Details</p>"

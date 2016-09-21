@@ -4,7 +4,20 @@ function full_catalog_array() {
     include("connection.php");
 
     try {
-        $results = $db->query("SELECT media_id, title, category, img FROM media");
+        $results = $db->query("
+            SELECT media_id, title, category, img 
+            FROM media
+            ORDER BY 
+            REPLACE(
+                REPLACE(
+                    REPLACE(title,'The ',''),
+                    'An ',
+                    ''
+                ),
+                'A ',
+                ''
+            )"
+        );
     }
     catch (Exception $e) {
         echo "Not retrieved";
@@ -14,6 +27,58 @@ function full_catalog_array() {
     $catalog = $results->fetchAll(PDO::FETCH_ASSOC);
     return $catalog;
 }
+
+function category_catalog_array($category) {
+    include("connection.php");
+
+    try {
+        $results = $db->prepare("
+            SELECT media_id, title, category, img 
+            FROM media
+            WHERE LOWER(category) = ?
+            ORDER BY 
+            REPLACE(
+                REPLACE(
+                    REPLACE(title,'The ',''),
+                    'An ',
+                    ''
+                ),
+                'A ',
+                ''
+            )"
+        );
+        $results->bindParam(1, $category, PDO::PARAM_STR);
+        $results->execute();
+    }
+    catch (Exception $e) {
+        echo "Not retrieved3";
+        exit;
+    }
+
+    $catalog = $results->fetchAll(PDO::FETCH_ASSOC);
+    return $catalog;
+}
+
+function random_catalog_array() {
+    include("connection.php");
+
+    try {
+        $results = $db->query("
+            SELECT media_id, title, category, img 
+            FROM media
+            ORDER BY RAND()
+            LIMIT 4
+            ");
+    }
+    catch (Exception $e) {
+        echo "Not retrieved";
+        exit;
+    }
+
+    $catalog = $results->fetchAll(PDO::FETCH_ASSOC);
+    return $catalog;
+}
+
 function single_item_array($id) {
     include("connection.php");
 
@@ -58,7 +123,7 @@ function single_item_array($id) {
     return $item;
 }
 
-function get_item_html($id,$item) {
+function get_item_html($item) {
     $output = "<li><a href='details.php?id="
         . $item["media_id"] . "'><img src='" 
         . $item["img"] . "' alt='" 

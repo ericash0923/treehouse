@@ -14,8 +14,28 @@ class Recipe {
 		"big",
 		"small");
 
+	public function __toString() {
+		$output = "You are calling a " . __CLASS__ . " object with the title ";
+		$output .= $this->getTitle() . "<br />";
+		$output .= "It is stored in " . basename(__FILE__) . " at " . __DIR__ . "<br />";
+		$output .= "This display from the line" . __LINE__ . " in method " . __METHOD__;
+		$output .= "All the methods: <br />";
+		$output .= implode("<br />", get_class_methods(__CLASS__));
+
+		return $output;
+	}
+
+	public function __construct($title = null) {
+		$this->setTitle($title);
+	}
+
 	public function setTitle($title) {
-		$this->title = ucwords($title);
+		if (empty($title)) {
+			$this->title = null;
+		}
+		else {
+			$this->title = ucwords($title);
+		}
 	}
 
 	public function getTitle() {

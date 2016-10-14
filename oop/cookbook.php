@@ -2,9 +2,8 @@
 include "classes/recipes.php";
 include "classes/render.php";
 
-$recipe1 = new Recipe();
+$recipe1 = new Recipe("my first recipe");
 $recipe1->setSource = "Tadas Blinda";
-$recipe1->setTitle("my first recipe");
 $recipe1->addIngredient("egg", 5);
 $recipe1->addIngredient("carrot", 2, "small");
 
@@ -16,4 +15,5 @@ $recipe1->addTag("Dinner");
 
 $recipe1->setYield("3 servings");
 
-echo Render::displayRecipe($recipe1);
+echo $recipe1;
+echo new Render();

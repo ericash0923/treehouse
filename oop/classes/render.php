@@ -2,6 +2,16 @@
 
 class Render {
 
+	public function __toString() {
+		$output = "<br /><br />You are calling a " . __CLASS__ . " object with the title ";
+		$output .= "<br />It is stored in " . basename(__FILE__) . " at " . __DIR__ . "<br />";
+		$output .= "This display from the line" . __LINE__ . " in method " . __METHOD__;
+		$output .= "<br />All the methods: <br />";
+		$output .= implode("<br />", get_class_methods(__CLASS__));
+
+		return $output;
+	}
+
 	public static function listIngredients($ingredients) {
 		$output = "";
 		foreach ($ingredients as $ing) {

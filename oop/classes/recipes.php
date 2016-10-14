@@ -1,29 +1,77 @@
 <?php 
 class Recipe {
 
-	public $title;
-	public $ingredients = array();
-	public $instructions = array();
-	public $yield;
-	public $tag = array();
-	public $source = "Marius Zaleskis";
-	
-	public function displayRecipe() {
-		return $this->title . " by " . $this->source;
+	private $title;
+	private $ingredients = array();
+	private $instructions = array();
+	private $yield;
+	private $tag = array();
+	private $source = "Marius Zaleskis";
+
+	private $measurements = array(
+		"spoon",
+		"pint",
+		"big",
+		"small");
+
+	public function setTitle($title) {
+		$this->title = ucwords($title);
+	}
+
+	public function getTitle() {
+		return $this->title;
+	}
+
+	public function addInstruction($string) {
+		$this->instructions[] = $string;
+	}
+
+	public function getInstructions() {
+		return $this->instructions;
+	}
+
+	public function addTag($tag) {
+		$this->tag[] = strtolower($tag);
+	}
+
+	public function getTags() {
+		return $this->tag;
+	}
+
+	public function setYield($yield) {
+		$this->yield = $yield;
+	}
+
+	public function getYield() {
+		return $this->yield;
+	}
+
+	public function setSource($source) {
+		$this->source = ucword($source);
+	}
+
+	public function getSource() {
+		return $this->source;
+	}
+
+	public function addIngredient ($item, $amount = null, $measure = null) {
+		if ($amount != null && !is_float($amount) && !is_int($amount)) {
+			exit("The amount must be a float: " . gettype($amount) . " $amount given");
+		}
+		if ($measure != null && !in_array(strtolower($measure), $this->measurements)) {
+			exit("Please enter a valid measurement: " . implode(", ", $this->measurements));
+		}
+
+		$this->ingredients[] = array(
+			"item" => ucwords($item),
+			"amount" => $amount,
+			"measure" => strtolower($measure)
+			);
+	}
+
+	public function getIngredients() {
+		return $this->ingredients;
 	}
 }
-
-$recipe1 = new Recipe();
-$recipe1->source = "Tadas Blinda";
-$recipe1->title = "My first recipe";
-
-$recipe2 = new Recipe();
-$recipe2->source = "Jonas Balvonas";
-$recipe2->title = "My second recipe";
-
-echo $recipe1->displayRecipe() . "<br />";
-echo $recipe2->displayRecipe();
-
-//var_dump($recipe1);
 
 ?>

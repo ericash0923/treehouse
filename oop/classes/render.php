@@ -12,6 +12,16 @@ class Render {
 		return $output;
 	}
 
+	public static function listShopping($ingredient_list) {
+		ksort($ingredient_list);
+		return implode("<br />", array_keys($ingredient_list));
+	}
+
+	public static function listRecipes($titles) {
+		asort($titles);
+		return implode("<br />", $titles);
+	}
+
 	public static function listIngredients($ingredients) {
 		$output = "";
 		foreach ($ingredients as $ing) {

@@ -9,10 +9,18 @@ class Recipe {
 	private $source = "Marius Zaleskis";
 
 	private $measurements = array(
-		"spoon",
-		"pint",
-		"big",
-		"small");
+        "tsp",
+        "big",
+        "small",
+        "tbsp",
+        "cup",
+        "oz",
+        "lb",
+        "fl oz",
+        "pint",
+        "quart",
+        "gallon"
+    );
 
 	public function __toString() {
 		$output = "You are calling a " . __CLASS__ . " object with the title ";
@@ -67,7 +75,7 @@ class Recipe {
 	}
 
 	public function setSource($source) {
-		$this->source = ucword($source);
+		$this->source = ucwords($source);
 	}
 
 	public function getSource() {

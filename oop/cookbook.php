@@ -1,19 +1,34 @@
 <?php
 include "classes/recipes.php";
 include "classes/render.php";
+include "classes/recipecollection.php";
+include "inc/recipes.php";
 
-$recipe1 = new Recipe("my first recipe");
-$recipe1->setSource = "Tadas Blinda";
-$recipe1->addIngredient("egg", 5);
-$recipe1->addIngredient("carrot", 2, "small");
+$cookbook = new RecipeCollection("Treehouse Recipes");
+$cookbook->addRecipe($lemon_chicken);
+$cookbook->addRecipe($granola_muffins);
+$cookbook->addRecipe($belgian_waffles);
+$cookbook->addRecipe($pepper_casserole);
+$cookbook->addRecipe($lasagna);
+$cookbook->addRecipe($dried_mushroom_ragout);
+$cookbook->addRecipe($rabbit_catalan);
+$cookbook->addRecipe($grilled_salmon_with_fennel);
+$cookbook->addRecipe($pistachio_duck);
+$cookbook->addRecipe($chili_pork);
+$cookbook->addRecipe($crab_cakes);
+$cookbook->addRecipe($beef_medallions);
+$cookbook->addRecipe($silver_dollar_cakes);
+$cookbook->addRecipe($french_toast);
+$cookbook->addRecipe($corn_beef_hash);
+$cookbook->addRecipe($granola);
+$cookbook->addRecipe($spicy_omelette);
+$cookbook->addRecipe($scones);
 
-$recipe1->addInstruction("This is my first instruction");
-$recipe1->addInstruction("This is my second instruction");
+$breakfast = new RecipeCollection("Favorite Breakfasts");
+foreach ($cookbook->filterByTag("breakfast") as $recipe) {
+	$breakfast->addRecipe($recipe);
+}
 
-$recipe1->addTag("Breakfast");
-$recipe1->addTag("Dinner");
-
-$recipe1->setYield("3 servings");
-
-echo $recipe1;
-echo new Render();
+echo Render::listRecipes($breakfast->getRecipeTitles());
+//echo Render::listRecipes($cookbook->getRecipeTitles());
+//echo Render::displayRecipe($belgian_waffles);

@@ -35,7 +35,8 @@ $week1->addRecipe($cookbook->filterById(3));
 $week1->addRecipe($cookbook->filterById(6));
 $week1->addRecipe($cookbook->filterById(16));
 
+echo $recipe;
 //echo Render::listRecipes($week1->getRecipeTitles());
-echo Render::listShopping($week1->getCombinedIngredients());
+//echo Render::listShopping($week1->getCombinedIngredients());
 //echo Render::listRecipes($cookbook->getRecipeTitles());
 //echo Render::displayRecipe($cookbook->filterById(2));

@@ -10,8 +10,12 @@
 			        <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
 			          <article class="post">
+                  <?php if (get_the_post_thumbnail()) : ?>
+                    <div class="img-container">
+                      <?php the_post_thumbnail('small'); ?>
+                    </div>
+                  <?php endif; ?>
                   <h1><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
-                  <h2><?php echo strip_tags(get_the_excerpt()); ?></h2>
                   <ul class="post-meta no-bullet">
                     <li class="author">
                         <span class="wpt-avatar small">
@@ -22,11 +26,7 @@
                     <li class="cat">in <?php the_category(' '); ?></li>
                     <li class="date">on <?php the_time('F j, Y'); ?></li>
                   </ul>
-                  <?php if (get_the_post_thumbnail()) : ?>
-                    <div class="img-container">
-                      <?php the_post_thumbnail('small'); ?>
-                    </div>
-                  <?php endif; ?>
+                  <?php the_content(); ?>
                 </article>
 
 			        <?php endwhile; else : ?>

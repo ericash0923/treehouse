@@ -2,6 +2,13 @@
 
 Finished:
 
+* Full-Stack Javascript
+	* JavaScript Basics
+	* JavaScript Loops, Arrays and Objects
+	* Defining Variables with let and const
+	* Arrow Function Syntax
+	* Javascript and the Dom
+
 * PHP
 	* PHP Arrays and Control Structures
 	* PHP Functions
@@ -24,3 +31,5 @@ Finished:
 	* Git Basics
 	* Github Basics
 	* Console Foundation
+
+https://teamtreehouse.com/mariuszaleskis

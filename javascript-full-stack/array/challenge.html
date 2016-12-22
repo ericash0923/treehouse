@@ -1,0 +1,27 @@
+<script>
+var quest = [
+	["Kiek yra 2+2?", "4"],
+	["Kiek yra 3+3", "6"],
+	["Kiek yra 4+4", "8"]
+];
+
+var correct = [];
+var incorrect = [];
+
+for (i = 0; i < quest.length; i+= 1) {
+	var guess = parseInt(prompt(quest[i][0]));
+
+	if (guess === parseInt(quest[i][1])) {
+		correct.push(quest[i]);
+	} else {
+		incorrect.push(quest[i]);
+	}
+}
+
+document.write("Teisingi:" + "<br />");
+document.write(correct + "<br />");
+
+document.write("Neteisingi:" + "<br />");
+document.write(incorrect + "<br />");
+
+</script>

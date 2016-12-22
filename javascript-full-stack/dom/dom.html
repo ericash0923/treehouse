@@ -1,0 +1,197 @@
+<html>
+<head>
+	
+</head>
+<div id="output">
+	<p id="p">asdasdasdd</p>
+	<p>asdasdasdd</p>
+	<p>asdasdasdd</p>
+	<button id="myButton">Mygtukas</button>
+	<input type="text" id="textInput">
+</div>
+
+<hr>
+
+	<h1>Header</h1>
+	<p class="description">Dalykai</p>
+	<input type="text" class="description">
+	<button class="description">Change list description</button>
+
+<hr>
+
+<button id="toggle-button">Hide</button>
+<div class="list">
+
+<ol>
+<li>One</li>
+<li class="error-not-purple">Two</li>
+<li>Three</li>
+<li id="query" class="error-not-purple">Four</li>
+</ol>
+
+</div>
+
+<hr>
+
+<input type="text" id="addElementInput">
+<button id="addElementButton">Add element</button>
+<!-- <button id="removeElementButton">Remove last element</button> -->
+
+<script type="text/javascript">
+
+//change text color by input
+	
+// const heading = document.getElementById('p');
+const myButton = document.getElementById('myButton');
+const textInput = document.getElementById('textInput');
+const paragraphs = document.getElementsByTagName('p')[1];
+
+myButton.addEventListener('click', () => {
+	paragraphs.style.color = textInput.value;
+});
+
+//add purple color to list
+
+const purpleList = document.getElementsByTagName('li');
+
+for (let i = 0; i < purpleList.length; i += 1) {
+	purpleList[i].style.color = 'purple';
+}
+
+//add error style
+
+const errorNotPurple = document.querySelectorAll('.error-not-purple');
+
+for (let i = 0; i < errorNotPurple.length; i += 1) {
+	errorNotPurple[i].style.color = 'red';
+}
+
+//add odd or evens style
+
+const evens = document.querySelectorAll('li:nth-child(odd)');
+
+for (let i = 0; i < evens.length; i += 1) {
+	evens[i].style.backgroundColor = 'lightgray';
+}
+
+//change p text
+
+const input = document.querySelector('input.description');
+const p = document.querySelector('p.description');
+const button = document.querySelector('button.description');
+
+button.addEventListener('click', () => {
+	p.innerHTML = input.value + ':';
+	input.value = '';
+});
+
+//toggle button
+
+const toggleButton = document.querySelector('#toggle-button');
+const list = document.querySelector('.list');
+
+toggleButton.addEventListener('click', () => {
+	if (list.style.display == 'none') {
+		list.style.display = 'block';
+		toggleButton.textContent = 'Hide';
+	} else {
+		list.style.display = 'none';
+		toggleButton.textContent = 'Show';
+	}
+});
+
+//create element
+const addElementInput = document.querySelector('#addElementInput');
+const addElementButton = document.querySelector('#addElementButton');
+
+addElementButton.addEventListener('click', () => {
+	let ol = document.getElementsByTagName('ol')[0];
+	let li = document.createElement('li');
+	li.textContent = addElementInput.value;
+	attachListItemButtons(li);
+	ol.appendChild(li);
+	addElementInput.value = '';
+});
+
+//remove element
+
+// const removeElementButton = document.querySelector('#removeElementButton');
+
+// removeElementButton.addEventListener('click', () => {
+// 	let ol = document.getElementsByTagName('ol')[0];
+// 	let li = document.querySelector('li:last-child');
+// 	ol.removeChild(li);
+// });
+
+//add mouseover event
+
+	// list.addEventListener('mouseover', (event) => {
+	// 	if (event.target.tagName == 'LI') {
+	// 		event.target.textContent = event.target.textContent.toUpperCase();
+	// 	}
+	// });
+	// list.addEventListener('mouseout', (event) => {
+	// 	if (event.target.tagName == 'LI') {
+	// 		event.target.textContent = event.target.textContent.toLowerCase();
+	// 	}
+	// });
+
+
+
+//attach buttons to newly added item
+
+function attachListItemButtons(li) {
+	let up = document.createElement('button');
+	up.className = 'up';
+	up.textContent = 'Up';
+	li.appendChild(up);
+
+	let down = document.createElement('button');
+	down.className = 'down';
+	down.textContent = 'Down';
+	li.appendChild(down);
+
+	let remove = document.createElement('button');
+	remove.className = 'remove';
+	remove.textContent = 'Remove';
+	li.appendChild(remove);
+}
+
+//attach buttons to old list 
+
+const listOl = list.querySelector('ol');
+const lis = listOl.children;
+
+for (i = 0; i < lis.length; i += 1) {
+	attachListItemButtons(lis[i]);
+}
+
+
+//remove, up and down list buttons
+
+listOl.addEventListener('click', (event) => {
+	if (event.target.className == 'remove') {
+		let li = event.target.parentNode;
+		let ol = li.parentNode;
+		ol.removeChild(li);
+	}
+	if (event.target.className == 'up') {
+		let li = event.target.parentNode;
+		let prevLi = li.previousElementSibling;
+		let ol = li.parentNode;
+		if (prevLi) {
+			ol.insertBefore(li, prevLi);
+		}
+	}
+	if (event.target.className == 'down') {
+		let li = event.target.parentNode;
+		let nextLi = li.nextElementSibling;
+		let ol = li.parentNode;
+		if (nextLi) {
+			ol.insertBefore(nextLi, li);
+		}
+	}
+});
+
+</script>
+</html>

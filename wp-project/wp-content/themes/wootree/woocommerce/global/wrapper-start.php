@@ -21,4 +21,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<section class="row">
+<section>
+<div class="section">
+      <div class="container-fluid full2">

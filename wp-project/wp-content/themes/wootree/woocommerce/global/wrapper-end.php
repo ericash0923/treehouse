@@ -21,3 +21,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 </section>
+</div>
+    </div>

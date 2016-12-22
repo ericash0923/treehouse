@@ -1,0 +1,31 @@
+<html>
+	<script type="text/javascript">
+		function alertRandom (number) {
+			var randomNumber = Math.floor( Math.random() * number ) + 1;
+			return alert(randomNumber);
+		}
+		</script>
+		<button onclick="alertRandom(10)">alert with 10</button>
+
+		<br /><br />
+
+		<script type="text/javascript">
+		function plotas (ilgis, plotis) {
+			var rezultatas = ilgis * plotis;
+			return alert(rezultatas);
+		}
+		</script>
+		<button onclick="plotas(10, 5)">alert plotas</button>
+
+		<br /><br />
+
+		<script type="text/javascript">
+			function randomPlotas () {
+				var randomNumber = Math.floor( Math.random() * 10 ) + 1;
+				var rezultatas = randomNumber * randomNumber;
+				return alert(rezultatas);
+			}
+		</script>
+
+		<button onclick="randomPlotas()">alert random plotas</button>
+</html>

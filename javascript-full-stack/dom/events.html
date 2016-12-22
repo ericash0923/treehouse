@@ -1,0 +1,31 @@
+<html>
+<body onoffline="offline()">
+
+<h1>Heading</h1>
+
+<ol>
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+<li>List item</li>
+</ol>
+
+<script type="text/javascript">
+
+//offline alert
+function offline() {
+	alert("You gone offline!");
+}
+
+//timeout function
+
+window.setTimeout((something) => {
+	const h1 = document.querySelector('h1');
+	h1.textContent = something;
+}, 3000, 'Heading altered after 3 sec');
+
+
+
+</script>
+</body>
+</html>

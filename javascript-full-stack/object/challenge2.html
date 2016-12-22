@@ -1,0 +1,31 @@
+<html>
+<button onclick="startSearch()">Start Search</button>
+
+<div id="output"></div>
+</html>
+
+<script src="database.js"></script>
+<script>
+function startSearch () {
+	while(true) {
+		var guess = prompt ("Take a name from database like 'Dave' or type 'quit' to end program");
+		for (i = 0; i < students.length; i += 1) {
+			student = students[i];
+			if (guess === student.name) {
+				returnObject(student);
+				return false; 
+			} else if (guess === 'quit') {
+				return false;
+			}
+		}
+	}
+}
+
+function returnObject (object) {
+	for (var name in object) {
+		document.write(name + ' : ' + object[name] + '<br>');
+	}
+}
+
+
+</script>

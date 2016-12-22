@@ -21,6 +21,69 @@ function wpt_cart_checkout_link () {
 	endif;
 }
 
+/**
+ * The following hook will add a input field right before "add to cart button"
+ * will be used for getting Name on t-shirt 
+ */
+function add_name_on_tshirt_field() {
+    echo '<table class="variations" cellspacing="0">
+          <tbody>
+              <tr>
+              <td class="label"><label for="color">Name On T-Shirt</label></td>
+              <td class="value">
+                  <input type="text" name="properties[name-on-tshirt]" value="" />
+              </td>
+              <td class="label"><label for="color">Name font color</label></td>
+              <td class="value">
+					<input type="text" name="properties[name-font-colour]" value="" />
+			</td>
+			<td class="label"><label for="color">Name On T-Shirt</label></td>
+              <td class="value">
+					<input type="text" name="properties[name-font-size]" value="" />                     
+              </td>
+          </tr>                               
+          </tbody>
+      </table>';
+}
+add_action( 'woocommerce_before_add_to_cart_button', 'add_name_on_tshirt_field' );
+
+
+
+function save_name_on_tshirt_field( $cart_item_data, $product_id ) {
+    if( isset( $_REQUEST['name-on-tshirt'] ) ) {
+        $custom_data = $_REQUEST['properties'];
+		WC()->session->set(  $cart_item_key.'_name_on_tshirt', sanitize_title(  $custom_data['name-on-tshirt']  )  );
+		WC()->session->set(  $cart_item_key.'_name_font_colour', sanitize_title(  $custom_data['name-font-colour']  )  );
+		WC()->session->set(  $cart_item_key.'_name_font_size', sanitize_title(  $custom_data['name-font-size']  )  );
+        /* below statement make sure every add to cart action as unique line item */
+        $cart_item_data['unique_key'] = md5( microtime().rand() );
+    }
+    return $cart_item_data;
+}
+add_action( 'woocommerce_add_cart_item_data', 'save_name_on_tshirt_field', 10, 2 );
+
+function render_meta_on_cart_and_checkout( $cart_data, $cart_item = null ) {
+    $custom_items = array();
+    /* Woo 2.4.2 updates */
+    if( !empty( $cart_data ) ) {
+        $custom_items = $cart_data;
+    }
+    if( isset( $cart_item['name_on_tshirt'] ) ) {
+        $custom_items[] = array( "name" => 'Name On T-Shirt', "value" => $cart_item['name_on_tshirt'] );
+    }
+    return $custom_items;
+}
+add_filter( 'woocommerce_get_item_data', 'render_meta_on_cart_and_checkout', 10, 2 );
+
+function tshirt_order_meta_handler( $item_id, $values, $cart_item_key ) {
+    if( isset( $values['name_on_tshirt'] ) ) {
+        wc_add_order_item_meta(  $item_id, "name_on_tshirt", WC()->session->get(  $cart_item_key.'_name_on_tshirt' )  );  
+		wc_add_order_item_meta(  $item_id, "name_font_colour", WC()->session->get(  $cart_item_key.'_name_font_colour' )  );
+		wc_add_order_item_meta(  $item_id, "name_font_size", WC()->session->get(  $cart_item_key.'_name_font_size' )  );
+    }
+}
+add_action( 'woocommerce_add_order_item_meta', 'tshirt_order_meta_handler', 1, 3 );
+
 function wpt_custom_billing_field ( $fields = array() ) {
 	unset($fields['billing_company']);
 	unset($fields['billing_address_1']);
@@ -77,9 +140,9 @@ wpt_create_widget( 'Blog Sidebar', 'blog', 'Displays on the side of pages in the
 
 function wpt_theme_styles() {
 
-	wp_enqueue_style( 'foundation_css', get_template_directory_uri() . '/css/foundation.css' );
+	wp_enqueue_style( 'bootstrap_css', get_template_directory_uri() . 'http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js' );
 	//wp_enqueue_style( 'normalize_css', get_template_directory_uri() . '/css/normalize.css' );
-	wp_enqueue_style( 'googlefont_css', 'http://fonts.googleapis.com/css?family=Asap:400,700,400italic,700italic' );
+	wp_enqueue_style( 'font-awesome', 'http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css' );
 	wp_enqueue_style( 'main_css', get_template_directory_uri() . '/style.css' );
 
 }

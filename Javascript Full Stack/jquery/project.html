@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JQuery project</title>
+	<style>
+	.selected {
+		background-color: yellow;
+	}
+	</style>
+</head>
+<body>
+
+<ol>
+	<li>Smth</li>
+	<li id="smth">Lala</li>
+	<li class="item">Smth</li>
+	<li class="item">Smth</li>
+</ol>
+
+<button id="mygtukas">Mygtukas</button><br><br>
+
+<span>If scroll happens</span><br><br>
+
+<input type="text" placeholder="append to list when changed"><br><br>
+
+<p class="fadeIn" ">Fade in</p>
+<p class="toggle">Toggle class when clicked</p>
+
+<div id="div">
+<p>Empty me when clicked</p>
+</div>
+
+<div id="div2">
+<p>Remove me when clicked</p>
+</div>
+
+<div style="border-style: solid;">
+	<p>Some text</p>
+	<button id="removeParent">Click me to remove all parrent DIV</button>
+	<p>Some text</p>
+</div>
+
+<ul class="level-1">
+  <li class="item-i">I</li>
+  <li class="item-ii">II
+    <ul class="level-2">
+      <li class="item-a">A</li>
+      <li class="item-b">B
+        <ul class="level-3">
+          <li class="item-1">1</li>
+          <li class="item-2">2</li>
+          <li class="item-3">3</li>
+        </ul>
+      </li>
+      <li class="item-c">C</li>
+    </ul>
+  </li>
+  <li class="item-iii">III</li>
+</ul>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+	//find descendant
+	$( "li.item-ii" ).find( "li" ).css( "background-color", "yellow" );
+
+	//remove parent
+	$('#removeParent').on('click', function() {
+		$('#removeParent').parent().remove();
+	})
+
+	//empty div
+	$('#div').on('click', function () {
+		$('#div').empty();
+	})
+		//remove div
+	$('#div2').on('click', function () {
+		$('#div2').empty();
+	})
+
+	//toogle classes
+	$('p.toggle').on('click', function () {
+		$(this).toggleClass('selected');
+	})
+
+	//fade in
+	$('p.fadeIn').css('display', 'none').fadeIn(1600);
+
+	//append method
+	$('input').change(function() {
+		var $inputValue = $('input').val();
+		$('ol').append("<li>" + $inputValue + "</li>");
+	});
+	
+	//click and fadeout
+	$('li').on('click', function() {
+		$(this).text("Clicked!").delay(800).fadeOut(400);
+	});
+
+	$('#mygtukas').on('click', function(event) {
+		console.log(event);
+	});
+
+	//hover method
+	$('#smth').hover(
+		function() {
+			$(this).html("<strong>Pazymeta</strong>");
+		},
+		function() {
+			$(this).html("Lala");
+		});
+
+	//scroll method
+	$(window).scroll(function() {
+		$('span').css('background-color', 'yellow');
+	});
+
+	//chage method
+		// $('input').change(function() {
+		// 	alert("text written");
+		// });
+
+	//attr method
+		// $('#mygtukas').on('click', function() {
+		// 	$('#mygtukas').attr('href', 'http://google.lt');
+		// 	console.log($('#mygtukas').attr('href'));
+		// });
+
+	// $('#mygtukas').click(function () {
+	// 	alert("msg");
+	// });
+
+
+
+</script>
+</body>
+</html>

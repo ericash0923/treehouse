@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ajax examples</title>
+</head>
+<body>
+
+<h1>Ajax Examples</h1>
+
+<div id="content">
+	<button id="load" onclick="sendAJAX()">Load Content</button>
+</div>
+
+<hr>
+
+<div id="content2">
+	<button id="load2" onclick="sendAJAX2()">Load parsed JSON content</button>
+</div>
+
+<script>
+
+//first load
+	var loadContent = new XMLHttpRequest();
+	loadContent.onreadystatechange = function () {
+		if (loadContent.readyState === 4) {
+			if (loadContent.status == 200) {
+				document.getElementById('content').innerHTML = loadContent.responseText;
+			} else {
+				alert("Something went wrong!");
+			}
+		}
+	};
+
+	loadContent.open('GET', 'paragraph.html');
+
+	function sendAJAX() {
+		loadContent.send();
+		document.getElementById('load').style.display = 'none';
+	}
+
+</script>
+
+<script>
+	
+//second load with JSON parse
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4) {
+			var employees = JSON.parse(xhr.responseText);
+			var statusHTML = '<ul>';
+			for (var i = 0; i < employees.length; i += 1) {
+				if (employees[i].inoffice === true) {
+					statusHTML += '<li><span style="background-color:green;">IN</span> ';
+				} else {
+					statusHTML += '<li><span style="background-color:red;">OUT</span> ';
+				}
+				statusHTML += employees[i].name;
+				statusHTML += '</li>';
+			}
+			statusHTML += '</ul>';
+			document.getElementById('content2').innerHTML = statusHTML;
+		}
+	};
+	xhr.open('GET', 'employees.json');
+
+	function sendAJAX2() {
+		xhr.send();
+		document.getElementById('load2').style.display = 'none';
+	}
+
+</script>
+</body>
+</html>

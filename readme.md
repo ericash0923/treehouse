@@ -8,6 +8,8 @@ Finished:
 	* Defining Variables with let and const
 	* Arrow Function Syntax
 	* Javascript and the Dom
+	* Introduction to JQuery
+	* AJAX Basics
 
 * PHP
 	* PHP Arrays and Control Structures

@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Ajax examples</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -14,7 +15,13 @@
 <hr>
 
 <div id="content2">
-	<button id="load2" onclick="sendAJAX2()">Load parsed JSON content</button>
+	<button id="load2" onclick="sendAJAX2()">Load parsed JSON content about employees</button>
+</div>
+
+<hr>
+
+<div id="content3">
+	<button id="load3" onclick="sendAJAX3()">Load parsed JSON content about rooms</button>
 </div>
 
 <script>
@@ -43,31 +50,67 @@
 <script>
 	
 //second load with JSON parse
-	var xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState === 4) {
-			var employees = JSON.parse(xhr.responseText);
-			var statusHTML = '<ul>';
-			for (var i = 0; i < employees.length; i += 1) {
-				if (employees[i].inoffice === true) {
-					statusHTML += '<li><span style="background-color:green;">IN</span> ';
-				} else {
-					statusHTML += '<li><span style="background-color:red;">OUT</span> ';
-				}
-				statusHTML += employees[i].name;
-				statusHTML += '</li>';
-			}
-			statusHTML += '</ul>';
-			document.getElementById('content2').innerHTML = statusHTML;
-		}
-	};
-	xhr.open('GET', 'employees.json');
+	// var xhr = new XMLHttpRequest();
+	// xhr.onreadystatechange = function () {
+	// 	if (xhr.readyState === 4) {
+	// 		var employees = JSON.parse(xhr.responseText);
+	// 		var statusHTML = '<ul>';
+	// 		for (var i = 0; i < employees.length; i += 1) {
+	// 			if (employees[i].inoffice === true) {
+	// 				statusHTML += '<li><span style="background-color:green;">IN</span> ';
+	// 			} else {
+	// 				statusHTML += '<li><span style="background-color:red;">OUT</span> ';
+	// 			}
+	// 			statusHTML += employees[i].name;
+	// 			statusHTML += '</li>';
+	// 		}
+	// 		statusHTML += '</ul>';
+	// 		document.getElementById('content2').innerHTML = statusHTML;
+	// 	}
+	// };
+	// xhr.open('GET', 'employees.json');
 
+	// function sendAJAX2() {
+	// 	xhr.send();
+	// 	document.getElementById('load2').style.display = 'none';
+	// }
+
+//second load with Jquery JSON parse
 	function sendAJAX2() {
-		xhr.send();
-		document.getElementById('load2').style.display = 'none';
+		var url = "employees.json";
+		$.getJSON(url, function(response) {
+			var statusHTML = '<ul>';
+				$.each(response, function(index, employee) {
+					if (employee.inoffice === true) {
+						statusHTML += '<li><span style="background-color:green;">IN</span> ';
+					} else {
+						statusHTML += '<li><span style="background-color:red;">OUT</span> ';
+					}
+					statusHTML += employee.name;
+					statusHTML += '</li>';
+				});
+				statusHTML += '</ul>';
+				$('#content2').html(statusHTML);
+		});
 	}
 
+	function sendAJAX3() {
+		var url = "rooms.json";
+		$.getJSON(url, function(response) {
+			var statusHTML = '<ul>';
+				$.each(response, function(index, room) {
+					if (room.available === true) {
+						statusHTML += '<li><span style="background-color:green;">EMPTY</span> ';
+					} else {
+						statusHTML += '<li><span style="background-color:red;">FULL</span> ';
+					}
+					statusHTML += room.room;
+					statusHTML += '</li>';
+				});
+				statusHTML += '</ul>';
+				$('#content3').html(statusHTML);
+		});
+	}
 </script>
 </body>
 </html>

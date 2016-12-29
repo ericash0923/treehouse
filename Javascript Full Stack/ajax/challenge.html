@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AJAX challenge</title>
+</head>
+<body>
+
+<div id="content">
+<p>Some unloaded content</p>
+</div>
+
+<script>
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4) {
+			if (xhr.status == 200) {
+				//parsing JSON
+				var rooms = JSON.parse(xhr.responseText);
+
+				//creating static HTML
+				var statusHTML = '<ul>';
+				for (var i = 0; i < rooms.length; i++) {
+					if (rooms[i].available == true) {
+						statusHTML += '<li><span style="background-color:green;">EMPTY</span> ';
+					} else {
+						statusHTML += '<li><span style="background-color:red;">FULL</span> ';
+					}
+					statusHTML += rooms[i].room;
+					statusHTML += '</li>';
+				}
+				statusHTML += '</ul>';
+				document.getElementById('content').innerHTML = statusHTML;
+			} else {
+				document.getElementById('content').innerHTML = "<p>Something went wrong</p>";
+			}
+		}
+	};
+
+	xhr.open('GET', 'rooms.json');
+	xhr.send();
+</script>
+</body>
+</html>

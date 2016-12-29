@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>POST AJAX JQUERY</title>
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+</head>
+<body>
+
+<div id="signup">
+	<form method="post" action="post.html">
+
+		<label for="userName">Please type your name</label>
+		<input type="text" name="userName" id="userName"><br>
+
+		<label for="email">Your email address</label>
+		<input type="email" name="email" id="email"><br>
+
+		<label for="submit"></label>
+		<input type="submit" value="Signup!" id="submit">
+
+	</form>
+</div>
+
+<script>
+// $.post method
+	// $('form').submit(function(event) {
+	// 	event.preventDefault();
+	// 	var url = $(this).attr('action');
+	// 	var data = $(this).serialize();
+	// 	console.log(data);
+
+	// 	$.post(url, data, function(response) {
+	// 		$('#signup').html('<p>Thanks for submitting form.</p>');
+	// 	});
+	// });
+
+// $.ajax method
+	$('form').submit(function(event) {
+		event.preventDefault();
+		var url = $(this).attr('action');
+		var data = $(this).serialize();
+		console.log(data);
+
+		$.ajax(url, {
+			data: data,
+			type: "POST",
+			success : function(response) {
+				$('#signup').html('<p>Thanks for submitting form.</p>');
+			},
+			error : function (response) {
+				$('#signup').html('<p>ERROR.</p>');
+			}
+		});
+	});
+
+</script>
+
+</body>
+</html>

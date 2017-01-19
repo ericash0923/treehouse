@@ -2,7 +2,7 @@
 
 Finished:
 
-* Full-Stack Javascript
+* Full-Stack Javascript (Started: 12-20, Finished: 01-19)
 	* JavaScript Basics
 	* JavaScript Loops, Arrays and Objects
 	* Defining Variables with let and const
@@ -10,6 +10,17 @@ Finished:
 	* Javascript and the Dom
 	* Introduction to JQuery
 	* AJAX Basics
+	* Object-Oriented JavaScript
+	* Introducing ES2015
+	* Node.js Basics
+	* Build a Simple Dynamic Site with Node.js
+	* npm Basics
+	* Gulp Basics
+	* Express Basics
+	* Mongo Basics
+	* User Authentication With Express and Mongo
+	* Build a REST API With Express
+	* JavaScript Unit Testing
 
 * PHP
 	* PHP Arrays and Control Structures
